@@ -5,12 +5,15 @@ import {
   writeResponseToNodeResponse,
 } from "@angular/ssr/node";
 import express from "express";
+import { extractVideoMiddleware } from "./server.middleware";
 import { join } from "node:path";
 
 const browserDistFolder = join(import.meta.dirname, "../browser");
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+app.use(extractVideoMiddleware);
 
 /**
  * Example Express Rest API endpoints can be defined here.

@@ -1,8 +1,8 @@
-import { RenderMode, ServerRoute } from "@angular/ssr";
+import { ServerRoute } from '@angular/ssr';
 
+/**
+ * Define server-specific routes.
+ */
 export const serverRoutes: ServerRoute[] = [
-  {
-    path: "**",
-    renderMode: RenderMode.Prerender,
-  },
+  // Add server-only routes here.
 ];
