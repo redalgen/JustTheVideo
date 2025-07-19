@@ -1,44 +1,65 @@
-<div class="max-w-2xl mx-auto p-8 bg-gray-800 rounded-lg shadow-lg mt-10">
-  <h1 class="text-3xl font-bold text-white mb-6 text-center">Just The Video</h1>
-  <p class="text-gray-400 mb-8 text-center">Paste the URL of the page containing the video you want to extract.</p>
-
-  <form (submit)="extractVideo()" class="flex flex-col sm:flex-row gap-4">
-    <input
-      type="url"
-      [ngModel]="url()"
-      (ngModelChange)="url.set($event)"
-      name="url"
-      placeholder="https://example.com/page-with-video"
-      required
-      class="flex-grow p-4 bg-gray-700 text-white rounded-md border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-    />
-    <button
-      type="submit"
-      [disabled]="loading()"
-      class="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-md transition-colors duration-300 flex items-center justify-center"
-    >
-      @if (loading()) {
-        <span class="h-5 w-5 border-t-2 border-b-2 border-white rounded-full animate-spin mr-2"></span>
-        <span>Extracting...</span>
-      } @else {
-        <span>Extract Video</span>
-      }
-    </button>
-  </form>
-
-  @if (error()) {
-    <div class="mt-6 p-4 bg-red-900 border border-red-700 text-red-300 rounded-md">
-      <p>{{ error() }}</p>
+<div class="relative min-h-screen flex items-center justify-center bg-gray-900 text-white p-4 select-none">
+  <div class="absolute inset-0 bg-grid-gray-800/20 [mask-image:linear-gradient(to_bottom,white_5%,transparent_95%)]"></div>
+  <div class="relative w-full max-w-2xl mx-auto p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700/50">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+        Just The Video
+      </h1>
+      <p class="text-gray-400 mt-2">
+        Paste the URL of the page containing the video you want to extract.
+      </p>
     </div>
-  }
 
-  @if (videoLink()) {
-    <div class="mt-8">
-      <h2 class="text-xl font-semibold text-white mb-4">Video Link Found:</h2>
-      <div class="p-4 bg-gray-700 rounded-md">
-        <a [href]="videoLink()" target="_blank" class="text-blue-400 hover:text-blue-300 break-all">{{ videoLink() }}</a>
+    <form (submit)="extractVideo()" class="flex flex-col sm:flex-row items-center gap-4">
+      <div class="relative flex-grow w-full">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+        </svg>
+        <input
+          type="url"
+          [ngModel]="url()"
+          (ngModelChange)="url.set($event)"
+          name="url"
+          placeholder="https://example.com/page-with-video"
+          required
+          class="w-full h-14 pl-12 pr-4 bg-gray-900/50 border border-gray-700 rounded-lg placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 select-text"
+        />
       </div>
-      <video [src]="videoLink()" controls class="mt-4 w-full rounded-md"></video>
-    </div>
-  }
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="w-full sm:w-auto h-14 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-bold px-8 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:shadow-blue-500/50 whitespace-nowrap"
+      >
+        @if (loading()) {
+          <span class="h-5 w-5 border-t-2 border-b-2 border-white rounded-full animate-spin"></span>
+          <span>Extracting...</span>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9.813 5.14-4.23-3.022a.75.75 0 0 0-1.09.218L.22 5.022a.75.75 0 0 0 .218 1.09l4.23 3.022a.75.75 0 0 0 1.09-.218L9.78 5.022a.75.75 0 0 0 .032-.882Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12.687 18.86 6.375 12.562a.75.75 0 0 1 0-1.062l6.312-6.312a.75.75 0 0 1 1.063 0l6.312 6.312a.75.75 0 0 1 0 1.062l-6.312 6.312a.75.75 0 0 1-1.063 0Z" />
+          </svg>
+          <span>Extract Video</span>
+        }
+      </button>
+    </form>
+
+    @if (error()) {
+      <div class="mt-6 p-4 bg-red-900/50 border border-red-700/50 text-red-300 rounded-lg flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+        </svg>
+        <p>{{ error() }}</p>
+      </div>
+    }
+
+    @if (videoLink()) {
+      <div class="mt-8 animate-fade-in">
+        <h2 class="text-xl font-semibold text-white mb-4">Video Ready!</h2>
+        <div class="p-4 bg-gray-900/50 border border-gray-700 rounded-lg">
+          <a [href]="videoLink()" target="_blank" class="text-blue-400 hover:text-blue-300 break-all transition-colors select-text">{{ videoLink() }}</a>
+        </div>
+        <video [src]="videoLink()" controls class="mt-4 w-full rounded-lg shadow-md"></video>
+      </div>
+    }
+  </div>
 </div>
